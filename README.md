@@ -15,3 +15,7 @@ To use this you need to clone it first. After cloning the github, you will want 
 5. Back in the first terminal, type npm run dev to launch the front-end.
 
 After this, the project will be running on your localhost. Typically at http://localhost:3000/
+
+# Author
+Lusaya, Maria Carmela J.
+Email: 8210131@ntc.edu.ph
