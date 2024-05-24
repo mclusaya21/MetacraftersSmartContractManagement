@@ -1,4 +1,12 @@
-# Starter Next/Hardhat Project
+# MetacraftersSmartContractManagement
+
+This project demonstrates a simple contract with 2-3 functions. It show the values of those functions in frontend of the application.
+
+# Description 
+
+A platform that helps with the development, implementation, and administration of smart contracts is known as a smart contract management platform.
+
+# Getting Started
 
 After cloning the github, you will want to do the following to get the code running on your computer.
 
