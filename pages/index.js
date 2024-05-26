@@ -41,7 +41,7 @@ export default function HomePage() {
     const accounts = await ethWallet.request({ method: 'eth_requestAccounts' });
     handleAccount(accounts);
     
-    // once wallet is set we can get a reference to our deployed contract
+    
     getATMContract();
   };
 
@@ -81,7 +81,7 @@ export default function HomePage() {
       return <p>Please install Metamask in order to use this ATM.</p>
     }
 
-    // Check to see if user is connected. If not, connect to their account
+    
     if (!account) {
       return <button onClick={connectAccount}>Please connect your Metamask wallet</button>
     }
