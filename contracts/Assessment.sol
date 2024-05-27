@@ -18,7 +18,7 @@ contract Lusaya {
     }
 
     function deposit(uint256 amount) external payable {
-        require(msg.sender == owner, "Only the owner can perform this transaction");
+        require(msg.sender == owner, "Only the owner can deposit funds");
         uint256 previousBalance = balance;
 
         balance += amount;
@@ -31,7 +31,7 @@ contract Lusaya {
     error InsufficientBalance(uint256 balance, uint256 withdrawAmount);
 
     function withdraw(uint256 withdrawAmount) external {
-        require(msg.sender == owner, "Only the owner can perform this transaction");
+        require(msg.sender == owner, "Only the owner can deposit funds");
         uint256 previousBalance = balance;
 
         if (balance < withdrawAmount) {
