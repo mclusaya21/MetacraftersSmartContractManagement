@@ -3,48 +3,48 @@ pragma solidity ^0.8.9;
 
 contract Lusaya {
     address payable public owner;
-    uint256 public balance;
+    uint256 public contractBalance;
 
-    event Deposit(uint256 amount);
-    event Withdraw(uint256 amount);
+    event FundsDeposited(uint256 amount);
+    event FundsWithdrawn(uint256 amount);
 
-    constructor(uint256 initBalance) payable {
+    constructor(uint256 initialBalance) payable {
         owner = payable(msg.sender);
-        balance = initBalance;
+        contractBalance = initialBalance;
     }
 
-    function getBalance() external view returns (uint256) {
-        return balance;
+    function getContractBalance() external view returns (uint256) {
+        return contractBalance;
     }
 
-    function deposit(uint256 amount) external payable {
-        require(msg.sender == owner, "Only the owner can deposit funds");
-        uint256 previousBalance = balance;
+    function addFunds(uint256 amount) external payable {
+        require(msg.sender == owner, "Only the contract owner can deposit funds");
+        uint256 previousBalance = contractBalance;
 
-        balance += amount;
+        contractBalance += amount;
 
-        assert(balance == previousBalance + amount);
+        assert(contractBalance == previousBalance + amount);
 
-        emit Deposit(amount);
+        emit FundsDeposited(amount);
     }
 
-    error InsufficientBalance(uint256 balance, uint256 withdrawAmount);
+    error InsufficientFunds(uint256 currentBalance, uint256 requestedAmount);
 
-    function withdraw(uint256 withdrawAmount) external {
-        require(msg.sender == owner, "Only the owner can deposit funds");
-        uint256 previousBalance = balance;
+    function withdrawFunds(uint256 amount) external {
+        require(msg.sender == owner, "Only the contract owner can withdraw funds");
+        uint256 previousBalance = contractBalance;
 
-        if (balance < withdrawAmount) {
-            revert InsufficientBalance({
-                balance: balance,
-                withdrawAmount: withdrawAmount
+        if (contractBalance < amount) {
+            revert InsufficientFunds({
+                currentBalance: contractBalance,
+                requestedAmount: amount
             });
         }
 
-        balance -= withdrawAmount;
+        contractBalance -= amount;
 
-        assert(balance == previousBalance - withdrawAmount);
+        assert(contractBalance == previousBalance - amount);
 
-        emit Withdraw(withdrawAmount);
+        emit FundsWithdrawn(amount);
     }
 }
