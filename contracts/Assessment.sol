@@ -22,7 +22,7 @@ contract Lusaya {
     function deposit(uint256 _amount) public payable {
         uint _previousBalance = balance;
 
-        // make sure this is the owner
+        
         require(msg.sender == owner, "Only owner can perform this transaction ");
 
         
