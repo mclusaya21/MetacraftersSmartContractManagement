@@ -24,7 +24,7 @@ export default function HomePage() {
 
   const handleAccount = (account) => {
     if (account) {
-      console.log ("Account connected: ", account);
+      console.log ("Account successfully connected: ", account);
       setAccount(account);
     }
     else {
@@ -34,7 +34,7 @@ export default function HomePage() {
 
   const connectAccount = async() => {
     if (!ethWallet) {
-      alert('MetaMask wallet is required to connect');
+      alert('You need to connect your MetaMask wallet');
       return;
     }
   
@@ -92,7 +92,7 @@ export default function HomePage() {
 
     return (
       <div>
-        <p>Your Account: {account}</p>
+        <p> You Account: {account}</p>
         <p>Your Balance: {balance}</p>
         <button onClick={deposit}>Deposit 5 ETH</button>
         <button onClick={withdraw}>Withdraw 5 ETH</button>
