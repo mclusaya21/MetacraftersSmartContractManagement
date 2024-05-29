@@ -24,24 +24,24 @@ export default function HomePage() {
 
   const handleAccount = (account) => {
     if (account) {
-      console.log ("Account successfully connected: ", account);
+      console.log ("Account connected: ", account);
       setAccount(account);
     }
     else {
-      console.log("No account found");
+      console.log("Account not found");
     }
   }
 
   const connectAccount = async() => {
     if (!ethWallet) {
-      alert('You need to connect your MetaMask wallet');
+      alert('You need to connect your Metamask wallet');
       return;
     }
   
     const accounts = await ethWallet.request({ method: 'eth_requestAccounts' });
     handleAccount(accounts);
     
-    
+    // once wallet is set we can get a reference to our deployed contract
     getATMContract();
   };
 
@@ -75,15 +75,23 @@ export default function HomePage() {
     }
   }
 
+  const withdrawAll = async() => {
+    if (atm && balance !== undefined) {
+      let tx = await atm.withdraw(balance);
+      await tx.wait()
+      getBalance();
+    }
+  }
+
   const initUser = () => {
     // Check to see if user has Metamask
     if (!ethWallet) {
       return <p>Please install Metamask in order to use this ATM.</p>
     }
 
-    
+    // Check to see if user is connected. If not, connect to their account
     if (!account) {
-      return <button onClick={connectAccount}>Please connect your Metamask wallet</button>
+      return <button onClick={connectAccount}>Connect your Metamask wallet to proceed. </button>
     }
 
     if (balance == undefined) {
@@ -92,10 +100,11 @@ export default function HomePage() {
 
     return (
       <div>
-        <p> You Account: {account}</p>
-        <p>Your Balance: {balance}</p>
+        <p>Account: {account}</p>
+        <p>Current Balance: {balance}</p>
         <button onClick={deposit}>Deposit 5 ETH</button>
         <button onClick={withdraw}>Withdraw 5 ETH</button>
+        <button onClick={withdrawAll}>Withdraw all balance</button>
       </div>
     )
   }
@@ -105,11 +114,13 @@ export default function HomePage() {
   return (
     <main className="container">
       <header><h1>Welcome to the NTC ATM!</h1></header>
+      <p>Click the button to proceed in your transaction.</p>
       {initUser()}
       <style jsx>{`
         .container {
-          text-align: center
-        }
+          text-align: center;
+       } 
+        
       `}
       </style>
     </main>
