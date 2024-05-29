@@ -1,50 +1,60 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
+//import "hardhat/console.sol";
+
 contract Lusaya {
     address payable public owner;
-    uint256 public contractBalance;
+    uint256 public balance;
 
-    event FundsDeposited(uint256 amount);
-    event FundsWithdrawn(uint256 amount);
+    event FundsDeposit(uint256 amount);
+    event FundsWithdraw(uint256 amount);
 
-    constructor(uint256 initialBalance) payable {
+    constructor(uint initBalance) payable {
         owner = payable(msg.sender);
-        contractBalance = initialBalance;
+        balance = initBalance;
     }
 
-    function getContractBalance() external view returns (uint256) {
-        return contractBalance;
+    function getContractBalance() public view returns(uint256){
+        return balance;
     }
 
-    function addFunds(uint256 amount) external payable {
-        require(msg.sender == owner, "Only the contract owner can deposit funds");
-        uint256 previousBalance = contractBalance;
+    function depositFunds(uint256 _amount) public payable {
+        uint _previousBalance = balance;
 
-        contractBalance += amount;
+        // make sure this is the owner
+        require(msg.sender == owner, "Only owner can deposit funds");
 
-        assert(contractBalance == previousBalance + amount);
+        // perform transaction
+        balance += _amount;
 
-        emit FundsDeposited(amount);
+        // assert transaction completed successfully
+        assert(balance == _previousBalance + _amount);
+
+        // emit the event
+        emit FundsDeposit(_amount);(_amount);
     }
 
-    error InsufficientFunds(uint256 currentBalance, uint256 requestedAmount);
+    // custom error
+    error InsufficientBalance(uint256 balance, uint256 withdrawAmount);
 
-    function withdrawFunds(uint256 amount) external {
-        require(msg.sender == owner, "Only the contract owner can withdraw funds");
-        uint256 previousBalance = contractBalance;
-
-        if (contractBalance < amount) {
-            revert InsufficientFunds({
-                currentBalance: contractBalance,
-                requestedAmount: amount
+    function withdrawFunds(uint256 _withdrawAmount) public {
+        require(msg.sender == owner, "You are not the owner of this account");
+        uint _previousBalance = balance;
+        if (balance < _withdrawAmount) {
+            revert InsufficientBalance({
+                balance: balance,
+                withdrawAmount: _withdrawAmount
             });
         }
 
-        contractBalance -= amount;
+        // withdraw the given amount
+        balance -= _withdrawAmount;
 
-        assert(contractBalance == previousBalance - amount);
+        // assert the balance is correct
+        assert(balance == (_previousBalance - _withdrawAmount));
 
-        emit FundsWithdrawn(amount);
+        // emit the event
+        emit FundsWithdraw(_withdrawAmount);(_withdrawAmount);
     }
 }
