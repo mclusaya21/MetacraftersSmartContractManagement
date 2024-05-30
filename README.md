@@ -9,7 +9,8 @@ A platform that helps with the development, implementation, and administration o
 # Getting Started
 
 To do this project, a template were provided by Sir Chris of Metacrafters. Here's the link https://github.com/MetacrafterChris/SCM-Starter. 
-You need to clone the github first. After cloning the github, you will want to do the following to get the code running on your computer.
+
+After cloning the project follow these five steps in order run this projec in your computer.
 
 1. Inside the project directory, in the terminal type: npm i
 2. Open two additional terminals in your VS code
