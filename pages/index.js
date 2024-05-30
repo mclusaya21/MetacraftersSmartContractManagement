@@ -7,7 +7,8 @@ export default function HomePage() {
   const [account, setAccount] = useState(undefined);
   const [atm, setATM] = useState(undefined);
   const [balance, setBalance] = useState(undefined);
-
+  
+ 
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const atmABI = atm_abi.abi;
 
@@ -28,13 +29,13 @@ export default function HomePage() {
       setAccount(account);
     }
     else {
-      console.log("Account not found");
+      console.log("No account found");
     }
   }
 
   const connectAccount = async() => {
     if (!ethWallet) {
-      alert('You need to connect your Metamask wallet');
+      alert('MetaMask wallet is required to connect');
       return;
     }
   
@@ -83,6 +84,7 @@ export default function HomePage() {
     }
   }
 
+  
   const initUser = () => {
     // Check to see if user has Metamask
     if (!ethWallet) {
@@ -91,7 +93,7 @@ export default function HomePage() {
 
     // Check to see if user is connected. If not, connect to their account
     if (!account) {
-      return <button onClick={connectAccount}>Connect your Metamask wallet to proceed. </button>
+      return <button onClick={connectAccount}>Connect your Meatamask wallet</button>
     }
 
     if (balance == undefined) {
@@ -102,6 +104,7 @@ export default function HomePage() {
       <div>
         <p>Account: {account}</p>
         <p>Current Balance: {balance}</p>
+        <h3>Choose your transaction.</h3>
         <button onClick={deposit}>Deposit 5 ETH</button>
         <button onClick={withdraw}>Withdraw 5 ETH</button>
         <button onClick={withdrawAll}>Withdraw all balance</button>
@@ -114,13 +117,12 @@ export default function HomePage() {
   return (
     <main className="container">
       <header><h1>Welcome to the NTC ATM!</h1></header>
-      <p>Click the button to proceed in your transaction.</p>
+      <h2>Click the button to proceed</h2>
       {initUser()}
       <style jsx>{`
         .container {
-          text-align: center;
-       } 
-        
+          text-align: center
+        }
       `}
       </style>
     </main>
